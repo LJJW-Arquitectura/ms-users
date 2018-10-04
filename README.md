@@ -1,24 +1,23 @@
-# README
+# MS-USERS
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This repository contains a Ruby on Rails project designed to run as a dockerized microservice that presents a REST API.
 
-Things you may want to cover:
+To run this project, deploy it on a suitable Docker Container
 
-* Ruby version
+`docker-compose build`
 
-* System dependencies
+`docker-compose up`
 
-* Configuration
+or deploy it locally like an usual Ruby on Rails project
 
-* Database creation
+`rails server -b "0.0.0.0" `
 
-* Database initialization
+The Gemfile and Docker image used agree on using Ruby version 2.4.4, and as such, to run this project locally, this version is required.
 
-* How to run the test suite
+Once the project is deployed, the database must be started. From another console, run the following commands:
 
-* Services (job queues, cache servers, search engines, etc.)
+`docker-compose run users-ms rake db:create`
 
-* Deployment instructions
+`docker-compose run users-ms rake db:migrate`
 
-* ...
+The main table 'Users' was generated as a rails scaffold, as such, it includes a model (/app/models/user.rb) and a controller (/app/controllers/users_controller.rb) without a view (due to being an API)
