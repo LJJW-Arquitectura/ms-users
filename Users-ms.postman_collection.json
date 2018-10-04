@@ -1,0 +1,149 @@
+{
+	"info": {
+		"_postman_id": "c2499819-9c94-48ed-8383-1650e7e5face",
+		"name": "Users-ms",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POSTtest",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"Mr. Faker\",\n    \"email\": \"fakeemail@google\",\n    \"password\": \"123abc\"\n}\n"
+				},
+				"url": {
+					"raw": "{{url}}:3000/users/",
+					"host": [
+						"{{url}}"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						""
+					]
+				},
+				"description": "Create an user\n"
+			},
+			"response": []
+		},
+		{
+			"name": "GETALLtest",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"fakeemail@google\",\n    \"pass\": \"123abc\"\n}\n"
+				},
+				"url": {
+					"raw": "{{url}}:3000/users",
+					"host": [
+						"{{url}}"
+					],
+					"port": "3000",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GETONEtest",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"fakeemail@google\",\n    \"pass\": \"123abc\"\n}\n"
+				},
+				"url": {
+					"raw": "{{url}}:3000/users/1",
+					"host": [
+						"{{url}}"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PATCHtest",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"LetsChangeThatUsername\"\n}\n"
+				},
+				"url": {
+					"raw": "{{url}}:3000/users/1",
+					"host": [
+						"{{url}}"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETEtest",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"LetsChangeThatUsername2\"\n}\n"
+				},
+				"url": {
+					"raw": "{{url}}:3000/users/3",
+					"host": [
+						"{{url}}"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
