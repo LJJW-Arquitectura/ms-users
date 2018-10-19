@@ -6,7 +6,7 @@ info:
   title: Microservice for Users
   description: Ruby (on Rails) + PostgreSQL
 
-host: 192.168.99.101:3000
+host: 192.168.0.10:3000
 schemes:
   - http
 consumes:
@@ -72,10 +72,6 @@ paths:
           description: The code of the user to be updated
           required: true
           type: integer
-        - name: user
-          in: body
-          required: true
-          description: user Object
       responses:
         '204':
           description: No Content
@@ -143,7 +139,7 @@ definitions:
       list:
         type: array
         items:
-          $ref: '#/definitions/Course'
+          $ref: '#/definitions/user'
 
 # Errors
   ErrorModel:
