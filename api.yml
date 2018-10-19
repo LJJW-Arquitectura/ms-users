@@ -102,7 +102,26 @@ paths:
           description: Not Acceptable (Invalid Params)
         '500':
           description: unexpected error
-
+  /users/{username}/{password}:
+    get:
+      summary: Returns a user with the given username and password
+      operationId: getUserId
+      parameters:
+        - name: username
+          in: path
+          description: The username of the user to be returned
+          required: true
+          type: string
+        - name: password
+          in: path
+          description: The password of the user to be returned
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Ok
+        '404':
+          description: Not Found
 definitions:
 
   # Users
