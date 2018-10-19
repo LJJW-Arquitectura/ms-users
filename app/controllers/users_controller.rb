@@ -41,7 +41,7 @@ class UsersController < ApplicationController
   # GET /users/Juan/p4ss
   def findId
     if User.where(username: params[:username], password: params[:password]).exists?
-      render json: User.where(username: params[:username], password: params[:password]).first.id
+      render json: User.where(username: params[:username], password: params[:password]).first
     else
       render json: {"error": "not_found"}, status: :unprocessable_entity
     end
