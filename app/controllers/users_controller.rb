@@ -37,7 +37,16 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
   end
-
+  
+  # GET /users/Juan/p4ss
+  def findId
+    if User.where(username: params[:username], password: params[:password]).exists?
+      render json: User.where(username: params[:username], password: params[:password]).first.id
+    else
+      render json: {"error": "not_found"}, status: :unprocessable_entity
+    end
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -48,4 +57,6 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:username, :email, :password)
     end
+ 
+  
 end
