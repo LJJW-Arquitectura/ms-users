@@ -42,8 +42,6 @@ class UsersController < ApplicationController
   def findId
     if User.where(username: params[:username], password: params[:password]).exists?
       render json: User.where(username: params[:username], password: params[:password]).first
-    else
-      render json: {"error": "not_found"}, status: :not_found
     end
   end
   
