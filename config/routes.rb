@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   resources :users 
-  get 'users/:username/:password', to: 'users#findId'
+  post 'users/auth', to: 'users#auth'
+  get 'users/l/:username/:password', to: 'users#findId'
+  post 'users/login', to: 'users#login'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
