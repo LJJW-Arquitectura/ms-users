@@ -8,11 +8,11 @@ To run this project, deploy it on a suitable Docker Container
 
 `docker-compose up`
 
-or deploy it locally like an usual Ruby on Rails project
+or deploy it locally like an usual Ruby on Rails project, after modifying the config/database.yml
 
 `rails server -b "0.0.0.0" `
 
-The Gemfile and Docker image used agree on using Ruby version 2.4.4, and as such, to run this project locally, this version is required.
+The Gemfile and Docker image used agree on using Ruby version 2.4.5, and as such, to run this project locally, this version is required.
 
 Once the project is deployed, the database must be started. From another console, run the following commands:
 
