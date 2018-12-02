@@ -1,3 +1,5 @@
+require 'net/ldap'
+
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
   attr_reader :headers
@@ -17,8 +19,19 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
-
-    if @user.save
+    dn = "cn="+@user.username+",ou=users,dc=UNreads,dc=unal,dc=edu,dc=co"
+    attri = {
+      :sn=>[@user.username], 
+      :uid=>[@user.username + @user.username], 
+      :objectclass => ["inetOrgPerson", "posixAccount", "top"],
+      :uidnumber=>[(1000 + User.maximum(:id).to_i + 1 ).to_s], :gidnumber=>["500"],
+      :homedirectory=>["/home/users/" + @user.username], 
+      :userpassword=> [ Net::LDAP::Password.generate(:md5, user_params[:password] ) ],
+      :cn=>[@user.username]
+    }
+    ldap = initialize_ldap_con
+    r = ldap.add( :dn => dn, :attributes => attri )
+    if r && @user.save
       render json: @user, status: :created
     else
       render json: @user.errors, status: :unprocessable_entity
@@ -47,9 +60,10 @@ class UsersController < ApplicationController
   end
 
   # POST /users/login
-  def login    
+  def login   
     user = User.where(username: params[:username]).first
-    if user && user.authenticate(params[:password])
+    l = ldap_auth(params[:username],params[:password])
+    if user && user.authenticate(params[:password]) && l
       result = JsonWebToken.encode(user_id: user.id) if user
       render json: { id: user.id, username: user.username, email: user.email ,  token: result }
     else
@@ -58,7 +72,7 @@ class UsersController < ApplicationController
   end
   
   # POST /users/auth
-  def auth
+  def auth    
     if params[:Authorization]
       @decoded_auth_token ||= JsonWebToken.decode(params['Authorization'].split(' ').last)
       if @decoded_auth_token and params[:id].to_i == @decoded_auth_token[:user_id]
@@ -71,6 +85,20 @@ class UsersController < ApplicationController
     end
   end
 
+  def ldap_auth(user, pass)
+    ldap = initialize_ldap_con
+    result = ldap.bind_as(
+      :base => "cn=" + user + ",ou=users,dc=UNreads,dc=unal,dc=edu,dc=co",
+      :password => pass
+      )
+    if result 
+      return true
+    else
+      return false
+    end
+  end
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -82,6 +110,14 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:username, :email, :password)
     end
- 
-  
-end
+
+    def initialize_ldap_con
+      print(ENV["LDAP_URL"])
+      ldap = Net::LDAP.new
+      ldap.host = ENV["LDAP_URL"]
+      ldap.port = 389
+      ldap.auth "cn=admin,dc=UNreads,dc=unal,dc=edu,dc=co", "admin"
+      return ldap
+    end
+
+  end
