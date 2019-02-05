@@ -1,6 +1,6 @@
 users-ms:
   build: .
-  command: bundle exec rails s -p 3000 -b '0.0.0.0'
+  command:  bash -c "sleep 40 && rm -f tmp/pids/server.pid && bundle exec rails db:migrate && bundle exec rails s -p 3000 -b '0.0.0.0'"
   environment:
       LDAP_URL: '192.168.0.8'
   ports:
